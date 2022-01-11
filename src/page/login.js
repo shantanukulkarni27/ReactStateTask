@@ -2,6 +2,7 @@ import { Form,Button } from "../components/index";
 import {useState} from "react"
 import {useNavigate} from "react-router-dom"
 import  Profile  from "./Profile";
+import { InputField,Mylabel } from "../components/styled";
 const Login =()=>{
 
     const [users,setUsers] =useState(
@@ -13,31 +14,31 @@ const Login =()=>{
     )
     let navigate = useNavigate();
     const HandleChange =() =>{
-      var data=  setUsers({
+      setUsers({
             ...users,
             name:document.getElementById("name").value,
             email:document.getElementById("email").value,
             Password:document.getElementById("password").value,
 
         })
-        console.log("data is",users)
     }
-    // const mydata= HandleChange();
-    console.log("my data is",users)
+    let data = users;
+    const redirectHandler =() =>{
+        navigate('/profile',{state: {users}})
+    }
+
     return(
         <>
-             <form>
-             <label>Name</label>
-             <input type="text" id="name" onChange ={HandleChange}  /> <br/><br/>
-             <label>email</label>
-             <input type="email" id="email" onChange ={HandleChange}  /><br/><br/>
-             <label>password</label>
-             <input type="password" id="password" onChange ={HandleChange}  />
-             <hr/>
-             <button onClick={()=>{navigate("./profile")}}> Submit</button>
-         </form>
-         <Profile data = {users}/>
-         
+             <div>
+                 <h1> Enter details </h1>
+             <Mylabel>Name</Mylabel>
+             <InputField type="text" id="name" placeholder="Enter Username" onChange={HandleChange}/>  
+             <Mylabel>email</Mylabel>
+             <InputField type="email" id="email" placeholder="Enter email" onChange={HandleChange}  />
+             <Mylabel>Password</Mylabel> 
+             <InputField type="password" id="password" placeholder="Enter Password" onChange={HandleChange}  />  
+             <button onClick={redirectHandler}> Submit</button>
+         </div>
         </>
     )
 }
