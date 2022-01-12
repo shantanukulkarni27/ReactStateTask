@@ -1,0 +1,1 @@
+export {default as MyCounter} from "./Counter"
