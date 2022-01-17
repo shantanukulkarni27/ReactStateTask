@@ -14,6 +14,7 @@ const MyCounter =()=>{
             }
             setCount(x);
         },1000)
+        
     }
     useEffect(()=>{
         Updater();

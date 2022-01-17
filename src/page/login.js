@@ -19,6 +19,8 @@ const Login =()=>{
             [e.target.email]:e.target.value,
             [e.target.Password]:e.target.value,
         })
+        console.log("usets",users);
+        
     }
     let data = users;
     const redirectHandler =() =>{
@@ -35,6 +37,7 @@ const Login =()=>{
              <InputField type="password" name="password" placeholder="Enter Password" onChange={HandleChange}  />  
              <button onClick={redirectHandler}> Submit</button>
          <MyCounter/>
+         <button onClick={()=>{navigate('/modal')}} >Modal</button>
         </>
     )
 }
