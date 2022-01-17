@@ -13,7 +13,7 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import { TextareaAutosize } from '@mui/base';
-import { useState, useRef } from 'react';
+import { useState} from 'react';
 
 function MyModal() {
   const [open, setOpen] = React.useState(false);
@@ -22,15 +22,7 @@ function MyModal() {
   const [isSubmitted, setSubmitted] = useState(false);
   const [role, setRole] = useState('');
   const [myText,setText] = useState('');
-
-  // const [users,setUsers] =useState(
-  //     {
-  //         fName: "",
-  //         lName:"",
-  //         role:"",
-  //     }
-  // )
-
+  
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -62,14 +54,6 @@ function MyModal() {
 
   const handleChange = (e, value) => {
     setRole(e.target.value);
-    // setUsers({
-    //     ...users,
-    //     fName:e.target.value,
-    //     lName:e.target.value,
-    //     role:e.target.value,
-    // })
-
-    // console.log("vals is",users)
   };
   const displaydata = () => {
     return (
