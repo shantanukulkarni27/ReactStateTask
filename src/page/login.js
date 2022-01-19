@@ -1,44 +1,74 @@
-import {useState} from "react"
-import {useNavigate} from "react-router-dom"
-import { InputField,Mylabel } from "../components/styled";
-import { Counter,MyCounter } from "../components/index";
-const Login =()=>{
-    const [users,setUsers] =useState(
-        {
-            name: "",
-            email:"",
-            Password:"",
-        }
-    )
-    let navigate = useNavigate();
-    const HandleChange =(e) =>{
+import {TextField } from "@mui/material";
+import { Button } from "@mui/material";
+import React, { useState } from 'react';
+import { makeStyles } from '@material-ui/styles';
+import { useLocation, useNavigate } from "react-router";
 
-      setUsers({
-            ...users,
-            [e.target.name]:e.target.value,
-            [e.target.email]:e.target.value,
-            [e.target.Password]:e.target.value,
-        })
-        console.log("usets",users);
-        
+const useStyles = makeStyles({
+    field:{
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'space-around',
+        alignItems: 'center',
+        padding:5      
     }
-    let data = users;
-    const redirectHandler =() =>{
-        navigate('/profile',{state: {users}})
-    }
+})
+const Login=()=>{
+    const [email,setEmail] =useState();
+    const classes = useStyles();
+    const navigator = useNavigate();
+    const loc = useLocation();
+    // const name = loc.state.fName;
+    // console.log("loca is",name)
+    const message = loc.state;
+
+    const token = localStorage.getItem("userToken")
+    console.log("token is",token)
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+
+        if(token){
+        navigator('/welcome',{state:email})
+        }else{
+          navigator('/')
+
+        }
+      };
+  
+      const handleClose=()=>{
+       
+      }
     return(
         <>
-             <h1> Enter details </h1>
-             <Mylabel>Name</Mylabel>
-             <InputField type="text" name="name" placeholder="Enter Username" onChange={(HandleChange)}/>  
-             <Mylabel>email</Mylabel>
-             <InputField type="email" name="email" placeholder="Enter email" onChange={HandleChange}  />
-             <Mylabel>Password</Mylabel> 
-             <InputField type="password" name="password" placeholder="Enter Password" onChange={HandleChange}  />  
-             <button onClick={redirectHandler}> Submit</button>
-         <MyCounter/>
-         <button onClick={()=>{navigate('/modal')}} >Modal</button>
+   <form className={classes.field} onSubmit={handleSubmit}>
+     <h1>{message}</h1>
+  
+        <TextField
+          label="Email"
+          variant="filled"
+          type="email"
+          value={email}
+          onChange={e => setEmail(e.target.value)}
+          required
+        />
+        <TextField
+          label="Password"
+          variant="filled"
+          type="password"
+          required
+        />
+        <div>
+          <Button variant="contained" onClick={handleClose}>
+            Cancel
+          </Button>
+          <Button type="submit" variant="contained" color="primary"  >
+            LogIn
+          </Button>
+        </div>
+      </form>
         </>
     )
 }
+
 export default Login;
