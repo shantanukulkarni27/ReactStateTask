@@ -1,9 +1,10 @@
 import {TextField } from "@mui/material";
 import { Button } from "@mui/material";
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { makeStyles } from '@material-ui/styles';
 import { useNavigate } from "react-router";
-import { padding } from "@mui/system";
+import ThemeContext from "../contexts/themeContext";
+import ThemeButton from "../components/themeButton";
 
 const useStyles = makeStyles({
     field:{
@@ -20,10 +21,11 @@ const useStyles = makeStyles({
       padding:5
     }
 })
-
 const Register=()=>{
     const classes = useStyles();
     const navigator = useNavigate();
+
+    const themes=useContext(ThemeContext);
     // create state variables for each input
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
@@ -44,11 +46,10 @@ const Register=()=>{
         let newDetail = JSON.parse(storedDetails)
         newDetail.push(details)
         localStorage.setItem("userDetails",JSON.stringify(newDetail))
-        const token = "jwt"
-        localStorage.setItem("userToken",token);
-        const message = "Registered Successfully"
-        navigator('/login',{state:message})
+  
       };
+      const message = "Registered Successfully"
+      navigator('/login',{state:message})
 
       }
       // localStorage.setItem("userdetails",JSON.stringify(details));
@@ -66,8 +67,7 @@ const Register=()=>{
   
     return (
       <>
-     
-      <form className={classes.field} onSubmit={handleSubmit}>
+      <div className={classes.field} style={themes.theme} >
       <h1>Register</h1>
         <TextField
           label="First Name"
@@ -103,11 +103,13 @@ const Register=()=>{
           <Button  variant="contained" onClick={handleClose}>
             Cancel
           </Button>
-          <Button type="submit"  variant="contained" color="primary"  >
+          <Button type="submit" onClick={handleSubmit}  variant="contained" color="primary"  >
             Signup
           </Button>
         </div>
-      </form>
+        <ThemeButton/>
+      </div>
+      
       </>
     )
 }

@@ -1,9 +1,10 @@
 import {TextField } from "@mui/material";
 import { Button } from "@mui/material";
-import React, { useState } from 'react';
+import React, { useState,useContext } from 'react';
 import { makeStyles } from '@material-ui/styles';
 import { useLocation, useNavigate } from "react-router";
-
+import ThemeContext from "../contexts/themeContext";
+import ThemeButton from "../components/themeButton";
 const useStyles = makeStyles({
     field:{
         display: 'flex',
@@ -14,7 +15,7 @@ const useStyles = makeStyles({
     }
 })
 const Login=()=>{
-    const [email,setEmail] =useState();
+    const [email,setEmail] =useState("");
     const classes = useStyles();
     const navigator = useNavigate();
     const loc = useLocation();
@@ -22,12 +23,13 @@ const Login=()=>{
     // console.log("loca is",name)
     const message = loc.state;
 
-    const token = localStorage.getItem("userToken")
-    console.log("token is",token)
-
+    //Trial
     const handleSubmit = (e) => {
         e.preventDefault();
-
+        const token = "jwt"
+        localStorage.setItem("userToken",token);
+        
+         
         if(token){
         navigator('/welcome',{state:email})
         }else{
@@ -37,11 +39,22 @@ const Login=()=>{
       };
   
       const handleClose=()=>{
-       
+        navigator('/')
       }
+
+      const themes = useContext(ThemeContext)
+     
+      console.log("theme is",themes)
+
+      // const [theme,setTheme]=useState(themes.dark);
+
+      // const toggleTheme=()=>{
+      //   theme==themes.dark?setTheme(themes.light):setTheme(themes.dark);
+      // }
+
     return(
         <>
-   <form className={classes.field} onSubmit={handleSubmit}>
+   <div className={classes.field} style={themes.theme} >
      <h1>{message}</h1>
   
         <TextField
@@ -62,11 +75,13 @@ const Login=()=>{
           <Button variant="contained" onClick={handleClose}>
             Cancel
           </Button>
-          <Button type="submit" variant="contained" color="primary"  >
+          <Button type="submit" variant="contained" color="primary" onClick={handleSubmit}  >
             LogIn
           </Button>
+          <ThemeButton/>
+          {/* <button onClick={toggleTheme} >change theme</button> */}
         </div>
-      </form>
+      </div>
         </>
     )
 }
