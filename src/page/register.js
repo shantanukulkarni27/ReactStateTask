@@ -5,6 +5,7 @@ import { makeStyles } from '@material-ui/styles';
 import { useNavigate } from "react-router";
 import ThemeContext from "../contexts/themeContext";
 import ThemeButton from "../components/themeButton";
+import { Validation } from "../helper/validations";
 
 const useStyles = makeStyles({
     field:{
@@ -24,19 +25,30 @@ const useStyles = makeStyles({
 const Register=()=>{
     const classes = useStyles();
     const navigator = useNavigate();
-
     const themes=useContext(ThemeContext);
-    // create state variables for each input
-    const [firstName, setFirstName] = useState('');
-    const [lastName, setLastName] = useState('');
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
+    const [errors,setErrors]=useState({firstName:'',
+    lastName:'',
+    email:'',
+    password:''});
+    const [values,setValues]=useState({
+      firstName:'',
+      lastName:'',
+      email:'',
+      password:''
+    })
+
+    const handleBlur=()=>{
+      console.log("In signup ");
+      console.log(Validation(values));
+      setErrors(Validation(values));
+    }
   
     const handleSubmit = (e) => {
-      e.preventDefault();
-      console.log(firstName, lastName, email, password);
-      const details = {fName:firstName,lName:lastName,mail:email,pw:password}
+      //e.preventDefault();
+  
+     if(!errors.email&&!errors.password&&!errors.firstName&&!errors.lastName){
 
+      const details = values;
       let storedDetails = localStorage.getItem('userDetails');
       if(storedDetails==null){
         storedDetails=[]
@@ -50,19 +62,16 @@ const Register=()=>{
       };
       const message = "Registered Successfully"
       navigator('/login',{state:message})
-
+     }
       }
-      // localStorage.setItem("userdetails",JSON.stringify(details));
- 
-    //   const message = "Registered Successfully"
-    //   navigator('/login',{state:message})
-    // };
 
     const handleClose=()=>{
-        setFirstName('');
-        setLastName('');
-        setEmail('');
-        setPassword('')
+       setValues({
+         firstName:'',
+         lastName:'',
+         email:'',
+         password:''
+       })
     }
   
     return (
@@ -73,32 +82,65 @@ const Register=()=>{
           label="First Name"
           variant="filled"
           required
-          value={firstName}
-          onChange={e => setFirstName(e.target.value)}
+          value={values.firstName}
+          onBlur={handleBlur}
+          onChange={(e)=>{
+            setValues({
+              firstName: e.target.value,
+              lastName:values.lastName,
+              email:values.email,
+              password: values.password
+            })}}
         />
+          {errors.firstName && <p>{errors.firstName}</p>}
         <TextField
           label="Last Name"
           variant="filled"
           required
-          value={lastName}
-          onChange={e => setLastName(e.target.value)}
+          value={values.lastName}
+          onBlur={handleBlur}
+          onChange={(e)=>{
+            setValues({
+              firstName: values.firstName,
+              lastName:e.target.value,
+              email:values.email,
+              password: values.password
+            })}}
         />
+        {errors.lastName && <p>{errors.lastName}</p>}
+        
         <TextField
           label="Email"
           variant="filled"
           type="email"
           required
-          value={email}
-          onChange={e => setEmail(e.target.value)}
+          value={values.email}
+          onBlur={handleBlur}
+          onChange={(e)=>{
+            setValues({
+              firstName:values.firstName,
+              lastName:values.lastName,
+              email: e.target.value,
+              password: values.password
+            })}}
         />
+          {errors.email && <p>{errors.email}</p>}
         <TextField
           label="Password"
           variant="filled"
           type="password"
           required
-          value={password}
-          onChange={e => setPassword(e.target.value)}
+          value={values.password}
+          onBlur={handleBlur}
+          onChange={(e)=>{
+            setValues({
+              firstName: values.firstName,
+              lastName:values.lastName,
+              email:values.email,
+              password: e.target.value,
+            })}}
         />
+        {errors.password && <p>{errors.password}</p>}
         <div className={classes.buttons} >
           <Button  variant="contained" onClick={handleClose}>
             Cancel

@@ -14,7 +14,7 @@ const Header = () =>{
                 <DashLi><a href="/dashboard">Dashboard</a></DashLi>
                 <DashLi><a href="/users" >User Deatils</a></DashLi>
                 <DashLi><a href="/aboutUs">About us</a></DashLi>
-                <DashLi><a href="/" onClick={removeSession} >Logout</a></DashLi>
+                <DashLi><a href="/login" onClick={removeSession} >Logout</a></DashLi>
                 <DashLi><ThemeButton/></DashLi>
             </DashUl>
         </div>

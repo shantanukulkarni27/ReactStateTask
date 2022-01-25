@@ -1,76 +1,101 @@
-import {TextField } from "@mui/material";
+import { TextField } from "@mui/material";
 import { Button } from "@mui/material";
-import React, { useState,useContext } from 'react';
+import React, { useState, useContext } from 'react';
 import { makeStyles } from '@material-ui/styles';
 import { useLocation, useNavigate } from "react-router";
 import ThemeContext from "../contexts/themeContext";
 import ThemeButton from "../components/themeButton";
+import { Validation } from "../helper/validations";
 const useStyles = makeStyles({
-    field:{
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'space-around',
-        alignItems: 'center',
-        padding:5      
-    }
+  field: {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'space-around',
+    alignItems: 'center',
+    padding: 5
+  }
 })
-const Login=()=>{
-    const [email,setEmail] =useState("");
-    const classes = useStyles();
-    const navigator = useNavigate();
-    const loc = useLocation();
-    // const name = loc.state.fName;
-    // console.log("loca is",name)
-    const message = loc.state;
+const Login = () => {
+  const [values, setValues] = useState({
+    email: "",
+    password: "",
+  })
+  const [errors,setErrors]=useState({});
+  const classes = useStyles();
+  const navigator = useNavigate();
+  const loc = useLocation();
+  const message = loc.state;
 
-    //Trial
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        const token = "jwt"
-        localStorage.setItem("userToken",token);
-        
-         
-        if(token){
-        navigator('/welcome',{state:email})
-        }else{
-          navigator('/')
+  const handleBlur=()=>{
+    console.log("in blur")
+    setErrors(Validation(values));
+  }
 
-        }
-      };
-  
-      const handleClose=()=>{
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (!errors.email&& !errors.password) {
+      console.log("in if",errors.email)
+      const token = "jwt"
+      localStorage.setItem("userToken", token);
+
+      if (token) {
+        navigator('/welcome', { state: values.email })
+      } else {
         navigator('/')
       }
 
-      const themes = useContext(ThemeContext)
-     
-      console.log("theme is",themes)
+    } else {
+      console.log("error")
+    }
+    
+  };
 
-      // const [theme,setTheme]=useState(themes.dark);
+  const handleClose = () => {
+    navigator('/')
+  }
 
-      // const toggleTheme=()=>{
-      //   theme==themes.dark?setTheme(themes.light):setTheme(themes.dark);
-      // }
+  const themes = useContext(ThemeContext)
 
-    return(
-        <>
-   <div className={classes.field} style={themes.theme} >
-     <h1>{message}</h1>
-  
+  const onEmailChange = (e) => {
+
+    setValues({
+      email: e.target.value,
+      password: values.password
+    })
+  }
+  const onPasswordChange = (e) => {
+    setValues({
+      email: values.email,
+      password: e.target.value
+    })
+  }
+  return (
+    <>
+      <div className={classes.field} style={themes.theme} >
+        <h1>{message}</h1>
         <TextField
           label="Email"
+          id="xyzemail"
           variant="filled"
           type="email"
-          value={email}
-          onChange={e => setEmail(e.target.value)}
+          name="email"
+          value={values.email}
+          onBlur={handleBlur}
+          onChange={onEmailChange}
           required
         />
+        {errors.email && <p>{errors.email}</p>}
         <TextField
           label="Password"
           variant="filled"
           type="password"
+          name='password'
+          value={values.password}
+          onBlur={handleBlur}
+          onChange={onPasswordChange}
           required
         />
+        {errors.password && <p>{errors.password}</p>}
         <div>
           <Button variant="contained" onClick={handleClose}>
             Cancel
@@ -78,12 +103,11 @@ const Login=()=>{
           <Button type="submit" variant="contained" color="primary" onClick={handleSubmit}  >
             LogIn
           </Button>
-          <ThemeButton/>
-          {/* <button onClick={toggleTheme} >change theme</button> */}
+          <ThemeButton />
         </div>
       </div>
-        </>
-    )
+    </>
+  )
 }
 
 export default Login;
