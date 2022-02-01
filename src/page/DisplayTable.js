@@ -23,8 +23,6 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 
-
-
 const DisplayTable = () => {
   const [result, setResult] = useState([]);
   const [open, setOpen] = useState(false);
@@ -36,12 +34,26 @@ const DisplayTable = () => {
 
   const handleClickOpen = () => {
     setOpen(true);
+    setId();
+    setFirstName();
+    setLastName();
+    setEmail();
   };
+
+  const handleEditOpen = (obj) => {
+    setOpen(true);
+    console.log("edie", obj)
+    setId(obj.id);
+    setFirstName(obj.firstName);
+    setLastName(obj.lastName);
+    setEmail(obj.email);
+
+  };
+
   const handleClose = () => {
     setOpen(false);
     setFirstName('');
     setLastName('');
-
   };
   const getUsers = () => {
     axios
@@ -52,23 +64,63 @@ const DisplayTable = () => {
         //   console.log("res is ",result)
       })
   }
+  const handleDelete = (id) => {
+    console.log("del id is", id)
+    axios.delete(`http://localhost:3001/users/${id}`)
+      .then(res => {
+        console.log("delete responce is", res);
+        result.filter(item => item.id !== id);
+        getUsers();
+      })
+      .catch(err => {
+        console.log("error is delete", err)
+      })
+  }
+
   const handleSubmit = async () => {
     setOpen(false);
     setSubmitted(true);
-    await axios.post('http://localhost:3001/users', {
-      id: id,
-      firstName: firstName,
-      lastName: lastName,
-      email: email
+    let myIds = result.map((obj) => {
+      return obj.id
+
     })
-      .then((response) => {
-        console.log("resp is", response)
-        setResult(response.data);
-        getUsers()
+    // console.log("id is", id)
+    let editable = myIds.includes(id);
+    if (editable) {
+      await axios.put(`http://localhost:3001/users/${id}`,
+        {
+          id: id,
+          firstName: firstName,
+          lastName: lastName,
+          email: email
+        }
+      )
+        .then((response) => {
+          console.log("resp is", response)
+          console.log('resp', response.data)
+          getUsers()
+        })
+        .catch((error) => {
+          console.log("erroe", error);
+        })
+
+    } else {
+      await axios.post('http://localhost:3001/users', {
+        id: id,
+        firstName: firstName,
+        lastName: lastName,
+        email: email
       })
-      .catch((error) => {
-        console.log("erroe", error);
-      })
+        .then((response) => {
+          console.log("resp is", response)
+          console.log('resp', response.data)
+          getUsers()
+        })
+        .catch((error) => {
+          console.log("erroe", error);
+        })
+    }
+
   };
   const handleId = (e) => {
     setId(e.target.value);
@@ -88,7 +140,6 @@ const DisplayTable = () => {
   };
   useEffect(() => {
     getUsers();
-
   }, []);
   return (
     <>
@@ -96,30 +147,34 @@ const DisplayTable = () => {
         <Table sx={{ minWidth: 450 }} aria-label="simple table">
           <TableHead>
             <TableRow>
+              <TableCell align="right">id</TableCell>
               <TableCell align="right">FirstName</TableCell>
               <TableCell align="right">Lastname</TableCell>
               <TableCell align="right">email</TableCell>
+              <TableCell align="right">Actions</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {result && result.map((obj, i) => (
+            {result.map((obj, i) => (
               <TableRow
                 key={i}>
-                <TableCell align="right">{i}</TableCell>
+                <TableCell align="right">{obj.id}</TableCell>
                 <TableCell align="right">{obj.firstName}</TableCell>
                 <TableCell align="right">{obj.lastName}</TableCell>
                 <TableCell align="right">{obj.email}</TableCell>
-                <Grid item xs={8}>
-                  <DeleteIcon />
-                  <ModeEditIcon />
-                </Grid>
+                <TableCell align="right">
+                  {/* <DeleteIcon onClick={handleDelete} /> */}
+                  <button onClick={() => { handleDelete(obj.id) }} >Delete</button>
+                  <button onClick={() => { handleEditOpen(obj) }} >Edit</button>
+                  {/* <ModeEditIcon  /> */}
+                </TableCell>
               </TableRow>
             ))}
           </TableBody>
         </Table>
       </TableContainer>
       <div>
-        <Button variant="outlined" onClick={handleClickOpen}>
+        <Button variant="outlined" onClick={handleEditOpen}>
           Employee Details
         </Button>
         <Dialog open={open} onClose={handleClose} >
@@ -181,5 +236,6 @@ const DisplayTable = () => {
       </div>
     </>
   )
+
 }
 export default DisplayTable;
