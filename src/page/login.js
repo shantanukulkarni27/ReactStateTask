@@ -1,8 +1,8 @@
+import { useLocation, useNavigate } from "react-router";
+import React, { useState, useContext } from 'react';
 import { TextField } from "@mui/material";
 import { Button } from "@mui/material";
-import React, { useState, useContext } from 'react';
 import { makeStyles } from '@material-ui/styles';
-import { useLocation, useNavigate } from "react-router";
 import ThemeContext from "../contexts/themeContext";
 import ThemeButton from "../components/themeButton";
 import { Validation } from "../helper/validations";
@@ -27,14 +27,13 @@ const Login = () => {
   const message = loc.state;
 
   const handleBlur=()=>{
-    console.log("in blur")
+
     setErrors(Validation(values));
   }
 
   const handleSubmit = (e) => {
-    e.preventDefault();
+    // e.preventDefault();
     if (!errors.email&& !errors.password) {
-      console.log("in if",errors.email)
       const token = "jwt"
       localStorage.setItem("userToken", token);
 
@@ -72,6 +71,7 @@ const Login = () => {
   return (
     <>
       <div className={classes.field} style={themes.theme} >
+        <h1>Login</h1>
         <h1>{message}</h1>
         <TextField
           label="Email"
@@ -100,7 +100,7 @@ const Login = () => {
           <Button variant="contained" onClick={handleClose}>
             Cancel
           </Button>
-          <Button type="submit" variant="contained" color="primary" onClick={handleSubmit}  >
+          <Button type="submit" variant="contained" color="primary" onClick={handleSubmit} disabled={!values.email || !values.password}  >
             LogIn
           </Button>
           <ThemeButton />

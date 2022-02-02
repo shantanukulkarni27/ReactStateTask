@@ -145,7 +145,7 @@ const Register=()=>{
           <Button  variant="contained" onClick={handleClose}>
             Cancel
           </Button>
-          <Button type="submit" onClick={handleSubmit}  variant="contained" color="primary"  >
+          <Button type="submit" onClick={handleSubmit} disabled={!values.firstName || !values.lastName || !values.email || !values.password }  variant="contained" color="primary"  >
             Signup
           </Button>
         </div>

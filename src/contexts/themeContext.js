@@ -1,7 +1,4 @@
-import { border } from "@mui/system";
 import React from "react";
-import { useState } from "react";
-
 export const themes ={
     dark:{
         color:'white',

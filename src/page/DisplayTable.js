@@ -1,8 +1,5 @@
-import { useContext, useEffect, useState } from "react";
-import { DashHead } from "../components/styled";
-import ThemeButton from "../components/themeButton";
-import ThemeContext, { themes } from "../contexts/themeContext";
-import { Header } from "../module/index";
+import {useEffect, useState } from "react";
+import { Validation } from "../helper/validations";
 import axios from 'axios';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -11,10 +8,6 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import Grid from '@mui/material/Grid';
-import DeleteIcon from '@mui/icons-material/Delete';
-import ModeEditIcon from '@mui/icons-material/ModeEdit';
-import EmpModal from "../components/EmpModal";
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
@@ -22,7 +15,7 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-import { Validation } from "../helper/validations";
+
 
 const DisplayTable = () => {
   const [result, setResult] = useState([]);
@@ -33,23 +26,23 @@ const DisplayTable = () => {
   const [email, setEmail] = useState('');
   const [id, setId] = useState()
   const [values, setValues] = useState({
+    id:"",
     firstName: "",
     lastName: "",
     email:""
   })
   const [errors,setErrors]=useState({});
 
-  const handleClickOpen = () => {
-    setOpen(true);
-    setId();
-    setFirstName();
-    setLastName();
-    setEmail();
-  };
+  // const handleClickOpen = () => {
+  //   setOpen(true);
+  //   setId();
+  //   setFirstName();
+  //   setLastName();
+  //   setEmail();
+  // };
 
   const handleEditOpen = (obj) => {
     setOpen(true);
-    console.log("edie", obj)
     setId(obj.id);
     setFirstName(obj.firstName);
     setLastName(obj.lastName);
@@ -59,8 +52,10 @@ const DisplayTable = () => {
 
   const handleClose = () => {
     setOpen(false);
+    setId();
     setFirstName('');
     setLastName('');
+    setEmail();
   };
   const getUsers = () => {
     axios
@@ -163,6 +158,7 @@ const DisplayTable = () => {
   const handleEmail = (e) => {
     setEmail(e.target.value);
     setValues({
+      
       firstName: values.firstName,
       lastName: values.lastName,
       email:e.target.value
@@ -197,10 +193,8 @@ const DisplayTable = () => {
                 <TableCell align="right">{obj.lastName}</TableCell>
                 <TableCell align="right">{obj.email}</TableCell>
                 <TableCell align="right">
-                  {/* <DeleteIcon onClick={handleDelete} /> */}
                   <button onClick={() => { handleDelete(obj.id) }} >Delete</button>
-                  <button onClick={() => { handleEditOpen(obj) }} >Edit</button>
-                  {/* <ModeEditIcon  /> */}
+                  <button onClick={() => { handleEditOpen(obj) }} >Edit</button>            
                 </TableCell>
               </TableRow>
             ))}
@@ -227,6 +221,7 @@ const DisplayTable = () => {
               fullWidth
               variant="standard"
               value={id}
+              onBlur={handleBlur}
               onChange={handleId}
             />
             <TextField
@@ -270,7 +265,7 @@ const DisplayTable = () => {
           </DialogContent>
           <DialogActions>
             <Button onClick={handleClose}>Cancel</Button>
-            <Button onClick={handleSubmit} disabled={!firstName || !lastName || !email} >Submit</Button>
+            <Button onClick={handleSubmit} disabled={!id || !firstName || !lastName || !email} >Submit</Button>
           </DialogActions>
         </Dialog>
       </div>

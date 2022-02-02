@@ -1,7 +1,7 @@
 import {useContext, useState} from "react"
 import {useNavigate} from "react-router-dom"
 import { InputField,Mylabel } from "../components/styled";
-import { Counter,MyCounter } from "../components/index";
+import { Counter,MyCounter } from "../components";
 import ThemeContext from "../contexts/themeContext";
 import { Header } from "../module";
 const UserDetail =()=>{
@@ -26,7 +26,6 @@ const UserDetail =()=>{
     const redirectHandler =() =>{
         navigate('/profile',{state: {users}})
     }
-
     const themes = useContext(ThemeContext);
     return(
         <>
@@ -43,7 +42,6 @@ const UserDetail =()=>{
          <MyCounter/>
          <button onClick={()=>{navigate('/modal')}} >Modal</button>
         </div>
-
         </>
     )
 }

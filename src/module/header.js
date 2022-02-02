@@ -1,5 +1,6 @@
 import { useContext } from "react"
-import { DashAnchor,DashUl,DashLi } from "../components/styled"
+import {Link} from 'react-router-dom'
+import {DashUl,DashLi } from "../components/styled"
 import ThemeButton from "../components/themeButton"
 import ThemeContext from "../contexts/themeContext"
 
@@ -11,10 +12,10 @@ const Header = () =>{
     return(
         <div style={themes.theme}>     
             <DashUl>
-                <DashLi><a href="/dashboard">Dashboard</a></DashLi>
-                <DashLi><a href="/users" >User Deatils</a></DashLi>
-                <DashLi><a href="/aboutUs">About us</a></DashLi>
-                <DashLi><a href="/login" onClick={removeSession} >Logout</a></DashLi>
+                <DashLi><Link to="/dashboard">Dashboard</Link></DashLi>
+                <DashLi><Link to="/users" >User Deatils</Link></DashLi>
+                <DashLi><Link to="/aboutUs">About us</Link></DashLi>
+                <DashLi><Link to="/login" onClick={removeSession} >Logout</Link></DashLi>
                 <DashLi><ThemeButton/></DashLi>
             </DashUl>
         </div>

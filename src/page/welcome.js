@@ -1,11 +1,11 @@
 import { useContext } from "react";
 import { useLocation } from "react-router";
 import ThemeContext from "../contexts/themeContext";
-import { Header } from "../module/index";
+import { Header } from "../module";
 const Welcome =()=>{
     const location = useLocation();
     const myName =location.state
-    console.log(location)
+    // console.log(location)
     const themes= useContext(ThemeContext)
     return(
         <>
