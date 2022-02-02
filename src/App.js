@@ -4,7 +4,7 @@ import { useState } from "react";
 
 
 function App() {
-  const [theme,setTheme]=useState(themes.dark);
+  const [theme,setTheme]=useState(themes.light);
   const value= {theme,setTheme}
   return (
     <div className="App">

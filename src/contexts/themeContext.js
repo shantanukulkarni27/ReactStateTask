@@ -6,11 +6,13 @@ export const themes ={
     dark:{
         color:'white',
         background:'#858585',
+        padding:'5px',
         border:'2px solid black'
     },
     light:{
         color:'black',
         background:'white',
+        padding:'5px',
         border:'2px solid black'
     }
 }

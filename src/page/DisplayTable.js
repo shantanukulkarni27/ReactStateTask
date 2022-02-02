@@ -22,6 +22,7 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
+import { Validation } from "../helper/validations";
 
 const DisplayTable = () => {
   const [result, setResult] = useState([]);
@@ -31,6 +32,12 @@ const DisplayTable = () => {
   const [isSubmitted, setSubmitted] = useState(false);
   const [email, setEmail] = useState('');
   const [id, setId] = useState()
+  const [values, setValues] = useState({
+    firstName: "",
+    lastName: "",
+    email:""
+  })
+  const [errors,setErrors]=useState({});
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -78,48 +85,55 @@ const DisplayTable = () => {
   }
 
   const handleSubmit = async () => {
+  
     setOpen(false);
     setSubmitted(true);
-    let myIds = result.map((obj) => {
-      return obj.id
-
-    })
-    // console.log("id is", id)
-    let editable = myIds.includes(id);
-    if (editable) {
-      await axios.put(`http://localhost:3001/users/${id}`,
-        {
+    if(!errors.email&& !errors.firstName && !errors.lastName ){
+      let myIds = result.map((obj) => {
+        return obj.id
+  
+      })
+      // console.log("id is", id)
+      let editable = myIds.includes(id);
+      if (editable) {
+        await axios.put(`http://localhost:3001/users/${id}`,
+          {
+            id: id,
+            firstName: firstName,
+            lastName: lastName,
+            email: email
+          }
+        )
+          .then((response) => {
+            console.log("resp is", response)
+            console.log('resp', response.data)
+            getUsers()
+          })
+          .catch((error) => {
+            console.log("erroe", error);
+          })
+  
+      } else {
+        await axios.post('http://localhost:3001/users', {
           id: id,
           firstName: firstName,
           lastName: lastName,
           email: email
-        }
-      )
-        .then((response) => {
-          console.log("resp is", response)
-          console.log('resp', response.data)
-          getUsers()
         })
-        .catch((error) => {
-          console.log("erroe", error);
-        })
+          .then((response) => {
+            console.log("resp is", response)
+            console.log('resp', response.data)
+            getUsers()
+          })
+          .catch((error) => {
+            console.log("erroe", error);
+          })
+      }
 
-    } else {
-      await axios.post('http://localhost:3001/users', {
-        id: id,
-        firstName: firstName,
-        lastName: lastName,
-        email: email
-      })
-        .then((response) => {
-          console.log("resp is", response)
-          console.log('resp', response.data)
-          getUsers()
-        })
-        .catch((error) => {
-          console.log("erroe", error);
-        })
+    }else{
+      console.log("enter values")
     }
+
 
   };
   const handleId = (e) => {
@@ -127,17 +141,37 @@ const DisplayTable = () => {
     console.log("id is", id)
   }
   const handlefirstName = (e) => {
-    setFirstName(e.target.value)
+    setFirstName(e.target.value);
+    setValues({
+      firstName: e.target.value,
+      lastName: values.lastName,
+      email:values.email
+    })
+
     console.log("first name is", firstName)
   }
   const handlelastName = (e) => {
     setLastName(e.target.value);
     console.log("lastName is", lastName);
+    setValues({
+      firstName: values.firstName,
+      lastName: e.target.value,
+      email:values.email
+    })
     ;
   }
   const handleEmail = (e) => {
     setEmail(e.target.value);
+    setValues({
+      firstName: values.firstName,
+      lastName: values.lastName,
+      email:e.target.value
+    })
   };
+  const handleBlur=()=>{
+    console.log("in blur")
+    setErrors(Validation(values));
+  }
   useEffect(() => {
     getUsers();
   }, []);
@@ -205,8 +239,10 @@ const DisplayTable = () => {
               fullWidth
               variant="standard"
               value={firstName}
+              onBlur={handleBlur}
               onChange={handlefirstName}
             />
+             {errors.firstName && <p>{errors.firstName}</p>}
             <TextField
               autoFocus
               margin="dense"
@@ -217,20 +253,24 @@ const DisplayTable = () => {
               fullWidth
               variant="standard"
               value={lastName}
+              onBlur={handleBlur}
               onChange={handlelastName}
             />
+             {errors.lastName && <p>{errors.lastName}</p>}
             <TextField
               label="Email"
               variant="filled"
               type="email"
               required
               value={email}
+              onBlur={handleBlur}
               onChange={handleEmail}
             />
+             {errors.email && <p>{errors.email}</p>}
           </DialogContent>
           <DialogActions>
             <Button onClick={handleClose}>Cancel</Button>
-            <Button onClick={handleSubmit}>Submit</Button>
+            <Button onClick={handleSubmit} disabled={!firstName || !lastName || !email} >Submit</Button>
           </DialogActions>
         </Dialog>
       </div>
