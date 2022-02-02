@@ -1,0 +1,28 @@
+{
+  "users": [
+    {
+      "id": "1",
+      "firstName": "Abcdddd",
+      "lastName": "Addv",
+      "email": "xyz@gmail.com"
+    },
+    {
+      "id": "2",
+      "firstName": "sss",
+      "lastName": "adadad",
+      "email": "shantanu.kulkarni@successive.tech"
+    },
+    {
+      "id": "3",
+      "firstName": "ada",
+      "lastName": " vf fvb",
+      "email": "shantanu.kulkarni@successive.tech"
+    },
+    {
+      "id": "4",
+      "firstName": "uu",
+      "lastName": "ddd",
+      "email": "shantanu.kulkarni@successive.tech"
+    }
+  ]
+}
