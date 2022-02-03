@@ -89,63 +89,6 @@ const Login = () => {
 
 
 const theme = createTheme();
-  // return (
-  //   <>
-  //       <div className={classes.field} >
-  //     <Box style={themes.theme} sx={{
-  //         boxShadow: 4,
-  //         width: '20rem',
-  //         height: '30rem',
-  //         bgcolor: (theme) => (theme.palette.mode === 'dark' ? '#101010' : '#fff'),
-  //         color: (theme) =>theme.palette.mode === 'dark' ? 'black.300' : 'black.800',
-  //         p: 1,
-  //         m: 1,
-  //         borderRadius: 5,
-  //       }} >
-  
-  //       <h1>Login</h1>
-  //       <h1>{message}</h1>
-  //       <Typography className={classes.Typo} >Email Address</Typography>
-  //       <TextField
-  //         label="Email"
-  //         id="xyzemail"
-  //         variant="filled"
-  //         type="email"
-  //         name="email"
-  //         className={classes.textField}
-  //         value={values.email}
-  //         onBlur={handleBlur}
-  //         onChange={onEmailChange}
-  //         required
-  //       />
-  //       {errors.email && <p>{errors.email}</p>}
-  //       <Typography className={classes.Typo} >Password</Typography>
-  //       <TextField
-  //         label="Password"
-  //         variant="filled"
-  //         type="password"
-  //         name='password'
-  //         value={values.password}
-  //         onBlur={handleBlur}
-  //         onChange={onPasswordChange}
-  //         required
-  //       />
-  //       {errors.password && <p>{errors.password}</p>}
-  //       <div>
-  //         <Button type="submit" variant="contained" className={classes.buttons} color="primary" onClick={handleSubmit} disabled={!values.email || !values.password}  >
-  //           LogIn
-  //         </Button>
-  //         <Typography className={classes.Typo} >OR</Typography>
-  //         <Button variant="contained" className={classes.buttons} onClick={handleClose}>
-  //           Cancel
-  //         </Button>
-  //         {/* <ThemeButton /> */}
-  //       </div>
-  //     </Box>
-  //     </div>
-  //   </>
-  // )
-
 
   return(
     <>

@@ -199,20 +199,6 @@ const DisplayTable = () => {
 
                 <Button variant="contained" color="error" onClick={() => {handleDelete(obj.id)}}> Delete</Button>
                 <Button variant="contained" color="success"onClick={() => {handleEditOpen(obj)}}> Edit</Button>
-                  {/* <button
-                    onClick={() => {
-                      handleDelete(obj.id);
-                    }}
-                  >
-                    Delete
-                  </button>
-                  <button
-                    onClick={() => {
-                      handleEditOpen(obj);
-                    }}
-                  >
-                    Edit
-                  </button> */}
                 </TableCell>
               </StyledTableRow >
             ))}
