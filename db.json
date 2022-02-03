@@ -2,27 +2,21 @@
   "users": [
     {
       "id": "1",
-      "firstName": "Abcdddd",
+      "firstName": "sk",
       "lastName": "Addv",
-      "email": "xyz@gmail.com"
+      "email": "shantanu.kulkarni@successive.tech"
     },
     {
       "id": "2",
-      "firstName": "sss",
-      "lastName": "adadad",
+      "firstName": "Shantanu",
+      "lastName": "Kulkarni",
       "email": "shantanu.kulkarni@successive.tech"
     },
     {
       "id": "3",
-      "firstName": "ada",
-      "lastName": " vf fvb",
-      "email": "shantanu.kulkarni@successive.tech"
-    },
-    {
-      "id": "4",
-      "firstName": "uu",
-      "lastName": "ddd",
-      "email": "shantanu.kulkarni@successive.tech"
+      "firstName": "eeee",
+      "lastName": "aasssssss",
+      "email": "shantanuKulkarni@successive.tech"
     }
   ]
 }

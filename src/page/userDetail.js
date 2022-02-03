@@ -4,6 +4,7 @@ import { InputField,Mylabel } from "../components/styled";
 import { Counter,MyCounter } from "../components";
 import ThemeContext from "../contexts/themeContext";
 import { Header } from "../module";
+import { Search } from "../components";
 const UserDetail =()=>{
     const [users,setUsers] =useState(
         {
@@ -39,8 +40,11 @@ const UserDetail =()=>{
              <Mylabel>Password</Mylabel> 
              <InputField type="password" name="password" placeholder="Enter Password" onChange={handleChange}  />  
              <button onClick={redirectHandler}> Submit</button>
-         <MyCounter/>
+        
          <button onClick={()=>{navigate('/modal')}} >Modal</button>
+        </div>
+        <div>
+            <Search/>
         </div>
         </>
     )

@@ -1,6 +1,6 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { UserDetail, Profile, MyModal, Dashboard, Login, Register, Welcome } from "./page/index"
-import { ErrorPage } from "./components/index";
+import { UserDetail, Profile, MyModal, Dashboard, Login, Register, Welcome } from "./page"
+import { ErrorPage } from "./components";
 import PrivateRoute from "./routes/privateRoute";
 import PublicRoute from "./routes/publicRoute";
 import AboutUsPage from "./page/aboutUsPage";
