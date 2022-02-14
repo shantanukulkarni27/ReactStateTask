@@ -1,8 +1,10 @@
-import { useEffect, useState } from "react";
-import axios from "axios";
+import { useContext,useState,useEffect } from "react";
+import {SearchContext} from "../App";
 import SearchIcon from '@mui/icons-material/Search';
 import { styled, alpha } from '@mui/material/styles';
 import InputBase from '@mui/material/InputBase';
+
+
 
 const Search = styled('div')(({ theme }) => ({
     position: 'relative',
@@ -43,27 +45,26 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
     },
 }));
 
-const MySearch = () => {
+const FilteredData =()=>{
+
+    const myData = useContext(SearchContext);
     const [searchTerm, setSearchTerm] = useState()
-    const [data, setData] = useState([]);
-    const getUsers = async () => {
-        await axios.get("http://localhost:3001/users").then((response) => {
-            console.log("resppppp is", response.data)
-            setData(response.data);
-            // console.log("res is ", data)
-        });
-    };
+    // const [data, setData] = useState([]);
+    // console.log("searched data",myData)
+
+   const getUsers=()=>{
+    //    setData(myData);
+    //    console.log("data issss",data)
+    }
 
     useEffect(() => {
-        getUsers();
-        // console.log("data is", data)
-    }, [searchTerm])
-    return (
+
+        console.log("data is", myData)
+    }, [searchTerm]);
+
+    return(
         <>
-            {/* <input type="text" placeholder="Search" onChange={(e)=>{
-        setSearchTerm(e.target.value)
-    }} /> */}
-            <Search>
+         <Search>
                 <SearchIconWrapper>
                     <SearchIcon />
                 </SearchIconWrapper>
@@ -81,7 +82,7 @@ const MySearch = () => {
                 />
             </Search>
             <div style={{background:'white',color:'black'}}>
-            {data.filter((val)=>{
+            {Object.values(myData).filter((val)=>{
         if(searchTerm==""){
             return val
         }else if(val.firstName.includes(searchTerm)){
@@ -98,4 +99,4 @@ const MySearch = () => {
         </>
     )
 }
-export default MySearch
+export default FilteredData;

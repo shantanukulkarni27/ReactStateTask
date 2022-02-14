@@ -1,20 +1,14 @@
 import * as React from 'react';
-import ReactDOM from 'react-dom';
+import axios from 'axios';
+import {useState} from 'react';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
-import Box from '@mui/material/Box';
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import Select from '@mui/material/Select';
-import { TextareaAutosize } from '@mui/base';
-import { useState,useEffect} from 'react';
-import axios from 'axios';
+import DialogTitle from '@mui/material/DialogTitle';;
+
 
 function EmpModal() {
   const [open, setOpen] = React.useState(false);
@@ -37,7 +31,7 @@ function EmpModal() {
     setOpen(false);
     setSubmitted(true);
     try {
-      console.log("in try",firstName,lastName,email)
+      // console.log("in try",firstName,lastName,email)
     await axios.post("http://localhost:3001/users",
         {
           firstName:firstName,
@@ -61,15 +55,13 @@ function EmpModal() {
   };
   const handlefirstName = (e) => {
     setFirstName(e.target.value)
-    console.log("first name is", firstName)
+    // console.log("first name is", firstName)
   }
   const handlelastName = (e) => {
     setLastName(e.target.value);
-    console.log("lastName is", lastName);
+    // console.log("lastName is", lastName);
     ;
   }
-
-
   const handleEmail = (e) => {
     setEmail(e.target.value);
   };

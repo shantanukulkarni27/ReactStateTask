@@ -31,12 +31,7 @@ const Register = () => {
   const classes = useStyles();
   const navigator = useNavigate();
   const themes = useContext(ThemeContext);
-  const [errors, setErrors] = useState({
-    firstName: '',
-    lastName: '',
-    email: '',
-    password: ''
-  });
+  const [errors, setErrors] = useState({});
   const [values, setValues] = useState({
     firstName: '',
     lastName: '',
@@ -51,7 +46,7 @@ const Register = () => {
   }
 
   const handleSubmit = (e) => {
-    //e.preventDefault();
+    // e.preventDefault();
 
     if (!errors.email && !errors.password && !errors.firstName && !errors.lastName) {
 

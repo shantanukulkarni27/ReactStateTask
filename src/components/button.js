@@ -3,8 +3,6 @@ const MyButton = (props) =>{
     return(
      <>
         <Btn>New</Btn>
-       
-       
      </>
     )
 }

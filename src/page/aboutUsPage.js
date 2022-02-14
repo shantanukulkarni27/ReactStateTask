@@ -1,7 +1,8 @@
+import { useContext } from "react";
 import { Header } from "../module"
 import { HeaderWrapper, ImgHolder, HeadTexts } from '../components/styled';
-import { useContext } from "react";
 import ThemeContext from "../contexts/themeContext";
+import FilteredData from "./filteredData";
 
 const AboutUsPage = (props) => {
     const themes = useContext(ThemeContext)
@@ -20,6 +21,8 @@ const AboutUsPage = (props) => {
                     <h6>admitted at  High Court </h6>
                 </HeadTexts>
             </HeaderWrapper>
+            <br/><br/>
+            <FilteredData/>
         </div>
     )
 }

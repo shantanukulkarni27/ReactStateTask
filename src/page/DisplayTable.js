@@ -17,7 +17,6 @@ import DialogTitle from "@mui/material/DialogTitle";
 import TableCell, { tableCellClasses } from '@mui/material/TableCell';
 import { styled } from '@mui/material/styles';
 
-
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
     backgroundColor: theme.palette.common.black,
@@ -93,7 +92,7 @@ const DisplayTable = () => {
   const handleSubmit = async () => {
     setOpen(false);
     setSubmitted(true);
-    console.log("eorros",errors.email)
+    // console.log("eorros",errors.email)
     if (!errors.email && !errors.firstName && !errors.lastName) {
       let myIds = result.map((obj) => {
         return obj.id;
@@ -196,7 +195,6 @@ const DisplayTable = () => {
                 <TableCell align="right">{obj.lastName}</TableCell>
                 <TableCell align="right">{obj.email}</TableCell>
                 <TableCell align="right">
-
                 <Button variant="contained" color="error" onClick={() => {handleDelete(obj.id)}}> Delete</Button>
                 <Button variant="contained" color="success"onClick={() => {handleEditOpen(obj)}}> Edit</Button>
                 </TableCell>
